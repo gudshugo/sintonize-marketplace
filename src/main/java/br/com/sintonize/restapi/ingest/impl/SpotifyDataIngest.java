@@ -23,9 +23,9 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Component
-public class SpotifyDataIngestTask implements ISpotifyDataIngest {
+public class SpotifyDataIngest implements ISpotifyDataIngest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SpotifyDataIngestTask.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SpotifyDataIngest.class);
 
     private final SpotifyConnection spotifyConnection;
 
@@ -34,7 +34,7 @@ public class SpotifyDataIngestTask implements ISpotifyDataIngest {
     private final IDiscoService discoService;
 
     @Autowired
-    public SpotifyDataIngestTask(SpotifyConnection spotifyConnection, IGeneroService generoService, IDiscoService discoService){
+    public SpotifyDataIngest(SpotifyConnection spotifyConnection, IGeneroService generoService, IDiscoService discoService){
         this.spotifyConnection = spotifyConnection;
         this.generoService = generoService;
         this.discoService = discoService;

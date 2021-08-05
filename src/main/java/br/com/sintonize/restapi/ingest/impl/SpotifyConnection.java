@@ -10,19 +10,19 @@ import com.wrapper.spotify.model_objects.specification.Paging;
 import com.wrapper.spotify.model_objects.specification.Track;
 import com.wrapper.spotify.requests.authorization.client_credentials.ClientCredentialsRequest;
 import com.wrapper.spotify.requests.data.search.simplified.SearchTracksRequest;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+@Component
 public class SpotifyConnection implements ISpotifyConnection {
 
     private static final String clientID = "eee034204d184245bd1147a92e4906e3";
     private static final String clientSecret = "4f1611af4e2c40419db080b2cc16ca52";
-    private static final String accessToken = "BQA99FnwNr2ZPhzs-wCREhhRUWbZVslLwPyiuda6nu_w_3hd90a3CeI3bvgPx6NxFe2yoz_qJN68Uau5w3dEl3BLeIiROChEyPYmj8APAcJ_6zUrigQ0G81jHiDMLIsVO3NOcs9W66Q-l5b-ew1Pv6Q";
 
     private static final SpotifyApi spotifyApi = new SpotifyApi.Builder()
             .setClientId(clientID)
             .setClientSecret(clientSecret)
-            .setAccessToken(accessToken)
             .build();
 
     private static final ClientCredentialsRequest clientCredentialsRequest = spotifyApi.clientCredentials()
