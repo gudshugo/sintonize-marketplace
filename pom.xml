@@ -64,6 +64,14 @@
 			<version>2.9.2</version>
 		</dependency>
 
+		<!-- Dependências p/ Consumo da API do Spotify -->
+
+		<dependency>
+			<groupId>se.michaelthelin.spotify</groupId>
+			<artifactId>spotify-web-api-java</artifactId>
+			<version>4.2.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
