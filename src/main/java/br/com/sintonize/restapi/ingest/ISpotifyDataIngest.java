@@ -6,6 +6,6 @@ import java.io.IOException;
 
 public interface ISpotifyDataIngest {
 
-    void importarDiscos() throws IOException, SpotifyWebApiException;
+    void importarAlbums() throws IOException, SpotifyWebApiException;
 
 }

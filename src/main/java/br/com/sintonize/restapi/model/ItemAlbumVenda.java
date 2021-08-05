@@ -7,19 +7,19 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "disco_venda")
+@Table(name = "album_venda")
 @Getter
 @NoArgsConstructor
 @Setter
-public class ItemDiscoVenda {
+public class ItemAlbumVenda {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "disco_id")
-    private Disco disco;
+    @JoinColumn(name = "album_id")
+    private Album album;
 
     @ManyToOne
     @JoinColumn(name = "venda_id")
@@ -32,7 +32,7 @@ public class ItemDiscoVenda {
     public static class Builder {
 
         private Long id;
-        private Disco disco;
+        private Album album;
         private Venda venda;
         private Double valorVenda;
         private Double valorCashback;
@@ -42,8 +42,8 @@ public class ItemDiscoVenda {
             return this;
         }
 
-        public Builder withDisco(Disco disco){
-            this.disco = disco;
+        public Builder withAlbum(Album album){
+            this.album = album;
             return this;
         }
 
@@ -62,14 +62,14 @@ public class ItemDiscoVenda {
             return this;
         }
 
-        public ItemDiscoVenda build(){
-            return new ItemDiscoVenda(this);
+        public ItemAlbumVenda build(){
+            return new ItemAlbumVenda(this);
         }
     }
 
-    private ItemDiscoVenda(Builder builder){
+    private ItemAlbumVenda(Builder builder){
         id = builder.id;
-        disco = builder.disco;
+        album = builder.album;
         venda = builder.venda;
         valorVenda = builder.valorVenda;
         valorCashback = builder.valorCashback;

@@ -27,7 +27,7 @@ public class Venda {
     @OneToMany(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "venda_id")
     @JsonIgnore
-    private List<ItemDiscoVenda> itemDiscoVendas;
+    private List<ItemAlbumVenda> itemAlbumVendas;
 
     private LocalDate dataVenda;
 
@@ -40,7 +40,7 @@ public class Venda {
         private Double valorCashback;
         private LocalDate dataVenda;
         private UUID uniqueId;
-        private List<ItemDiscoVenda> itemDiscoVendas;
+        private List<ItemAlbumVenda> itemAlbumVendas;
 
         public Builder setId(Long id){
             this.id = id;
@@ -67,8 +67,8 @@ public class Venda {
             return this;
         }
 
-        public Builder withItemDiscoVendas(List<ItemDiscoVenda> itemDiscoVendas){
-            this.itemDiscoVendas = itemDiscoVendas;
+        public Builder withItemAlbumVendas(List<ItemAlbumVenda> itemAlbumVendas){
+            this.itemAlbumVendas = itemAlbumVendas;
             return this;
         }
 
@@ -81,7 +81,7 @@ public class Venda {
         id = builder.id;
         valorVenda = builder.valorVenda;
         valorCashback = builder.valorCashback;
-        itemDiscoVendas = builder.itemDiscoVendas;
+        itemAlbumVendas = builder.itemAlbumVendas;
         dataVenda  = builder.dataVenda;
         uniqueId = builder.uniqueId;
     }

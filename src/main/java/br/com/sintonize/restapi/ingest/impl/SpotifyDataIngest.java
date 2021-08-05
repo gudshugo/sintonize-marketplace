@@ -1,15 +1,12 @@
 package br.com.sintonize.restapi.ingest.impl;
 
-import br.com.sintonize.restapi.enums.GeneroEnum;
 import br.com.sintonize.restapi.ingest.ISpotifyDataIngest;
-import br.com.sintonize.restapi.model.Disco;
-import br.com.sintonize.restapi.model.Genero;
-import br.com.sintonize.restapi.service.IDiscoService;
-import br.com.sintonize.restapi.service.IGeneroService;
+import br.com.sintonize.restapi.model.Album;
+import br.com.sintonize.restapi.service.IAlbumService;
 import br.com.sintonize.restapi.util.UtilMethods;
 import com.wrapper.spotify.exceptions.SpotifyWebApiException;
+import com.wrapper.spotify.model_objects.specification.AlbumSimplified;
 import com.wrapper.spotify.model_objects.specification.Paging;
-import com.wrapper.spotify.model_objects.specification.Track;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,57 +24,51 @@ public class SpotifyDataIngest implements ISpotifyDataIngest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SpotifyDataIngest.class);
 
-    private final SpotifyConnection spotifyConnection;
+    private final SpotifyRequests spotifyRequests;
 
-    private final IGeneroService generoService;
+    private final IAlbumService albumService;
 
-    private final IDiscoService discoService;
+    private final String emptyArtistImage = " ";
 
     @Autowired
-    public SpotifyDataIngest(SpotifyConnection spotifyConnection, IGeneroService generoService, IDiscoService discoService){
-        this.spotifyConnection = spotifyConnection;
-        this.generoService = generoService;
-        this.discoService = discoService;
+    public SpotifyDataIngest(SpotifyRequests spotifyRequests, IAlbumService albumService){
+        this.spotifyRequests = spotifyRequests;
+        this.albumService = albumService;
     }
 
     @PostConstruct
     private void init() throws IOException, SpotifyWebApiException{
-        importarDiscos();
+        importarAlbums();
     }
 
-    public void importarDiscos() throws IOException, SpotifyWebApiException {
+    public void importarAlbums() throws IOException, SpotifyWebApiException {
 
-        if(discoService.checkIfExistsAnyEntry() == 0) {
+        if(albumService.checkIfExistsAnyEntry() == 0) {
 
-            if (LOGGER.isInfoEnabled()) LOGGER.info("Inicio da importação dos discos da Spotify API.");
+            LOGGER.info("Inicio da importação dos albums da Spotify API.");
 
-            List<Genero> generos = generoService.findGeneros();
+            Paging<AlbumSimplified> albumsResponse = spotifyRequests.searchNewAlbums();
 
-                for (Genero genero : generos) {
+            List<Album> albums = Arrays
+                    .stream(albumsResponse.getItems())
+                    .map(ab -> new Album.Builder()
+                            .withUniqueId(UUID.randomUUID())
+                            .withNome(ab.getName())
+                            .withNomeArtista(!Arrays.asList(ab.getArtists()).isEmpty() ? Arrays.asList(ab.getArtists()).get(0).getName() : "Artista Desconhecido")
+                            .withImagem(!Arrays.asList(ab.getImages()).isEmpty() ? Arrays.asList(ab.getImages()).get(0).getUrl() : emptyArtistImage)
+                            .withIdApiSpotify(ab.getId())
+                            .withLinkSpotify(ab.getExternalUrls().get("spotify"))
+                            .withValor(UtilMethods.randomPriceGenerator())
+                            .build())
+                    .collect(Collectors.toList());
 
-                    Paging<Track> tracks = spotifyConnection.searchTracks(String.format("genre: %s + year:1995-2021", GeneroEnum.toGender(genero.getDescricao())));
+            albumService.saveAlbums(albums);
 
-                    List<Disco> discos = Arrays
-                            .stream(tracks.getItems())
-                            .map(track -> new Disco.Builder()
-                                    .withUniqueId(UUID.randomUUID())
-                                    .withNome(track.getAlbum().getName())
-                                    .withValor(UtilMethods.randomPriceGenerator())
-                                    .withGenero(genero)
-                                    .build())
-                            .limit(50)
-                            .collect(Collectors.toList());
+            LOGGER.info("Fim da importação dos albums da Spotify API.");
 
-                    discoService.saveDiscos(discos);
-
-                }
-
-                if (LOGGER.isInfoEnabled()) LOGGER.info("Fim da importação dos discos da Spotify API.");
-            }else{
-
-                if (LOGGER.isInfoEnabled()) LOGGER.info("Importação dos dados do Spotify já foi realizada.");
-            }
-
+        }else{
+            LOGGER.info("Importação dos dados do Spotify já foi realizada.");
+        }
     }
 
 }

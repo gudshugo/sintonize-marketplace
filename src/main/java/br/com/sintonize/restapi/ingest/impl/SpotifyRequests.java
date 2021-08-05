@@ -1,21 +1,23 @@
 package br.com.sintonize.restapi.ingest.impl;
 
-import br.com.sintonize.restapi.ingest.ISpotifyConnection;
+import br.com.sintonize.restapi.ingest.ISpotifyRequests;
 import com.neovisionaries.i18n.CountryCode;
 import com.wrapper.spotify.SpotifyApi;
 import com.wrapper.spotify.exceptions.SpotifyWebApiException;
 import com.wrapper.spotify.exceptions.detailed.UnauthorizedException;
 import com.wrapper.spotify.model_objects.credentials.ClientCredentials;
+import com.wrapper.spotify.model_objects.specification.AlbumSimplified;
 import com.wrapper.spotify.model_objects.specification.Paging;
 import com.wrapper.spotify.model_objects.specification.Track;
 import com.wrapper.spotify.requests.authorization.client_credentials.ClientCredentialsRequest;
+import com.wrapper.spotify.requests.data.browse.GetListOfNewReleasesRequest;
 import com.wrapper.spotify.requests.data.search.simplified.SearchTracksRequest;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
 @Component
-public class SpotifyConnection implements ISpotifyConnection {
+public class SpotifyRequests implements ISpotifyRequests {
 
     private static final String clientID = "eee034204d184245bd1147a92e4906e3";
     private static final String clientSecret = "4f1611af4e2c40419db080b2cc16ca52";
@@ -43,6 +45,7 @@ public class SpotifyConnection implements ISpotifyConnection {
         return false;
     }
 
+    @Override
     public Paging<Track> searchTracks(String genero) throws SpotifyWebApiException, IOException {
 
         boolean authenticated = executeAuthentication();
@@ -54,6 +57,24 @@ public class SpotifyConnection implements ISpotifyConnection {
                     .build();
 
             return searchTracksRequest.execute();
+        }
+
+        throw new UnauthorizedException("Falha de autenticação no serviço do Spotify");
+    }
+
+    @Override
+    public Paging<AlbumSimplified> searchNewAlbums() throws SpotifyWebApiException, IOException {
+
+        boolean authenticated = executeAuthentication();
+
+        if(authenticated) {
+
+            GetListOfNewReleasesRequest searchAlbumsRequest = spotifyApi.getListOfNewReleases()
+                    .limit(50)
+                    .build();
+
+            return searchAlbumsRequest.execute();
+
         }
 
         throw new UnauthorizedException("Falha de autenticação no serviço do Spotify");

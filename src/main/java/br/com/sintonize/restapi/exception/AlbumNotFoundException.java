@@ -2,9 +2,9 @@ package br.com.sintonize.restapi.exception;
 
 import java.util.NoSuchElementException;
 
-public class DiscoNotFoundException extends NoSuchElementException {
+public class AlbumNotFoundException extends NoSuchElementException {
 
-    public DiscoNotFoundException(String msg) {
+    public AlbumNotFoundException(String msg) {
         super(msg);
     }
 
