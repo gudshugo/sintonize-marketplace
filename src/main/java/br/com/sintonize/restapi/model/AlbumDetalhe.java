@@ -1,5 +1,8 @@
 package br.com.sintonize.restapi.model;
 
+import br.com.sintonize.restapi.util.MillisecondsToMinutesConverter;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,7 +24,10 @@ public class AlbumDetalhe {
 
     private int numero;
     private String nome;
-    private int duracao;
+
+    @JsonSerialize(converter = MillisecondsToMinutesConverter.class)
+    private Integer duracao;
+
     private String preview;
 
     @ManyToOne
@@ -32,9 +38,8 @@ public class AlbumDetalhe {
 
         private int numero;
         private String nome;
-        private int duracao;
+        private Integer duracao;
         private String preview;
-        private Album album;
 
         public Builder withNumero(int numero){
             this.numero = numero;
@@ -46,18 +51,13 @@ public class AlbumDetalhe {
             return this;
         }
 
-        public Builder withDuracao(int duracao){
+        public Builder withDuracao(Integer duracao){
             this.duracao = duracao;
             return this;
         }
 
         public Builder withPreview(String preview){
             this.preview = preview;
-            return this;
-        }
-
-        public Builder withAlbum(Album album){
-            this.album = album;
             return this;
         }
 
@@ -72,7 +72,6 @@ public class AlbumDetalhe {
         nome = builder.nome;
         duracao = builder.duracao;
         preview = builder.preview;
-        album = builder.album;
     }
 
 }
