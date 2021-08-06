@@ -2,6 +2,8 @@ package br.com.sintonize.restapi.service.impl;
 
 import br.com.sintonize.restapi.exception.AlbumNotFoundException;
 import br.com.sintonize.restapi.model.Album;
+import br.com.sintonize.restapi.model.AlbumDetalhe;
+import br.com.sintonize.restapi.repository.AlbumDetalheRepository;
 import br.com.sintonize.restapi.repository.AlbumRepository;
 import br.com.sintonize.restapi.service.IAlbumService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +20,17 @@ public class AlbumService implements IAlbumService {
 
     private final AlbumRepository albumRepository;
 
+    private final AlbumDetalheRepository albumDetalheRepository;
+
     @Autowired
-    public AlbumService(AlbumRepository albumRepository) {
+    public AlbumService(AlbumRepository albumRepository, AlbumDetalheRepository albumDetalheRepository) {
         this.albumRepository = albumRepository;
+        this.albumDetalheRepository = albumDetalheRepository;
     }
 
     @Override
-    public void saveAlbums(List<Album> albums){
-        albumRepository.saveAll(albums);
+    public void save(Album album){
+        albumRepository.save(album);
     }
 
     @Override
@@ -41,17 +46,19 @@ public class AlbumService implements IAlbumService {
 
     @Override
     public Album findAlbum(Long id){
-        Optional<Album> album = Optional.ofNullable(albumRepository.findAlbumById(id));
-
-        if(album.isPresent())
-            return album.get();
-
-        throw new AlbumNotFoundException(String.format("Album com id: %d não encontrado", id));
+        return Optional.ofNullable(albumRepository.findAlbumById(id))
+                .orElseThrow(() -> new AlbumNotFoundException(String.format("Album com id: %d não encontrado", id)));
     }
 
     @Override
     public List<Album> findListaAlbumsPorIds(List<Long> albumsId){
         return albumRepository.findAlbumByIdIn(albumsId);
+    }
+
+
+    @Override
+    public List<AlbumDetalhe> findDetalheById(Long albumId){
+        return albumDetalheRepository.findAlbumDetalheByAlbumId(albumId);
     }
 
 }

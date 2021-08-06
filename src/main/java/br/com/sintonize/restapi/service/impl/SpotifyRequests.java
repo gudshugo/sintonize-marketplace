@@ -1,6 +1,6 @@
-package br.com.sintonize.restapi.ingest.impl;
+package br.com.sintonize.restapi.service.impl;
 
-import br.com.sintonize.restapi.ingest.ISpotifyRequests;
+import br.com.sintonize.restapi.service.ISpotifyRequests;
 import com.neovisionaries.i18n.CountryCode;
 import com.wrapper.spotify.SpotifyApi;
 import com.wrapper.spotify.exceptions.SpotifyWebApiException;
@@ -9,7 +9,9 @@ import com.wrapper.spotify.model_objects.credentials.ClientCredentials;
 import com.wrapper.spotify.model_objects.specification.AlbumSimplified;
 import com.wrapper.spotify.model_objects.specification.Paging;
 import com.wrapper.spotify.model_objects.specification.Track;
+import com.wrapper.spotify.model_objects.specification.TrackSimplified;
 import com.wrapper.spotify.requests.authorization.client_credentials.ClientCredentialsRequest;
+import com.wrapper.spotify.requests.data.albums.GetAlbumsTracksRequest;
 import com.wrapper.spotify.requests.data.browse.GetListOfNewReleasesRequest;
 import com.wrapper.spotify.requests.data.search.simplified.SearchTracksRequest;
 import org.springframework.stereotype.Component;
@@ -19,6 +21,7 @@ import java.io.IOException;
 @Component
 public class SpotifyRequests implements ISpotifyRequests {
 
+    //TODO Recuperar credenciais via variavel de ambiente
     private static final String clientID = "eee034204d184245bd1147a92e4906e3";
     private static final String clientSecret = "4f1611af4e2c40419db080b2cc16ca52";
 
@@ -46,17 +49,16 @@ public class SpotifyRequests implements ISpotifyRequests {
     }
 
     @Override
-    public Paging<Track> searchTracks(String genero) throws SpotifyWebApiException, IOException {
+    public Paging<TrackSimplified> searchTracksByAlbum(String id) throws SpotifyWebApiException, IOException {
 
         boolean authenticated = executeAuthentication();
 
         if(authenticated) {
-            SearchTracksRequest searchTracksRequest = spotifyApi.searchTracks(genero)
-                    .market(CountryCode.PT)
+            GetAlbumsTracksRequest tracks = spotifyApi.getAlbumsTracks(id)
                     .limit(50)
                     .build();
 
-            return searchTracksRequest.execute();
+            return tracks.execute();
         }
 
         throw new UnauthorizedException("Falha de autenticação no serviço do Spotify");

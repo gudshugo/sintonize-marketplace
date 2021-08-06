@@ -1,4 +1,4 @@
-package br.com.sintonize.restapi.ingest;
+package br.com.sintonize.restapi.service;
 
 import com.wrapper.spotify.exceptions.SpotifyWebApiException;
 

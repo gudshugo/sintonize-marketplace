@@ -1,21 +1,19 @@
 package br.com.sintonize.restapi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@Setter
 public class Album {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +27,11 @@ public class Album {
     private String idApiSpotify;
     private String linkSpotify;
 
+    @OneToMany(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "album_id")
+    @JsonIgnore
+    private List<AlbumDetalhe> albumDetalhes;
+
     public static class Builder {
 
         private UUID uniqueId;
@@ -38,6 +41,7 @@ public class Album {
         private Double valor;
         private String idApiSpotify;
         private String linkSpotify;
+        private List<AlbumDetalhe> albumDetalhes;
 
         public Builder withUniqueId(UUID uniqueId){
             this.uniqueId = uniqueId;
@@ -74,6 +78,11 @@ public class Album {
             return this;
         }
 
+        public Builder withAlbumDetalhes(List<AlbumDetalhe> albumDetalhes){
+            this.albumDetalhes = albumDetalhes;
+            return this;
+        }
+
         public Album build() {
             return new Album(this);
         }
@@ -88,6 +97,7 @@ public class Album {
         valor = builder.valor;
         linkSpotify = builder.linkSpotify;
         idApiSpotify = builder.idApiSpotify;
+        albumDetalhes = builder.albumDetalhes;
     }
 
 }

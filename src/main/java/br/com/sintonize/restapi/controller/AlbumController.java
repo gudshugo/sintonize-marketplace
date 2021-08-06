@@ -1,6 +1,7 @@
 package br.com.sintonize.restapi.controller;
 
 import br.com.sintonize.restapi.model.Album;
+import br.com.sintonize.restapi.model.AlbumDetalhe;
 import br.com.sintonize.restapi.service.IAlbumService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @Api("Controller para realizar operações com a entidade Album e relacionados a ela.")
 public class AlbumController {
@@ -26,7 +29,7 @@ public class AlbumController {
     }
 
     @ApiOperation("Endpoint para consultar o catálogo de albums de forma paginada e ordenando de forma crescente pelo nome do album.")
-    @GetMapping(value = "/v1/albums", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/v1/album", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Page<Album>> findAlbuns(
             @RequestParam(value="page", defaultValue="0") Integer page,
             @RequestParam(value="linesPerPage", defaultValue="10") Integer linesPerPage,
@@ -37,11 +40,18 @@ public class AlbumController {
         return new ResponseEntity<>(albums, HttpStatus.OK);
     }
 
-    @ApiOperation("Endpoint para consultar o álbum pelo seu identificador")
-    @GetMapping(value = "/v1/albums/{albumId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation("Endpoint para consultar o álbum pelo seu identificador.")
+    @GetMapping(value = "/v1/album/{albumId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Album> findAlbum(@PathVariable Long albumId){
         Album album = albumService.findAlbum(albumId);
         return new ResponseEntity<>(album, HttpStatus.OK);
+    }
+
+    @ApiOperation("Endpoint para consultar os detalhes de um álbum pelo seu idenficador.")
+    @GetMapping(value = "/v1/album/{albumId}/detalhe", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<AlbumDetalhe>> findAlbumDetalhe(@PathVariable Long albumId){
+        List<AlbumDetalhe> detalhe = albumService.findDetalheById(albumId);
+        return new ResponseEntity<>(detalhe, HttpStatus.OK);
     }
 
 }

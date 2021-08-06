@@ -1,13 +1,14 @@
 package br.com.sintonize.restapi.service;
 
 import br.com.sintonize.restapi.model.Album;
+import br.com.sintonize.restapi.model.AlbumDetalhe;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
 
 public interface IAlbumService {
 
-    void saveAlbums(List<Album> albums);
+    void save(Album album);
 
     Long checkIfExistsAnyEntry();
 
@@ -16,5 +17,7 @@ public interface IAlbumService {
     Album findAlbum(Long id);
 
     List<Album> findListaAlbumsPorIds(List<Long> albumsId);
+
+    List<AlbumDetalhe> findDetalheById(Long id);
 
 }

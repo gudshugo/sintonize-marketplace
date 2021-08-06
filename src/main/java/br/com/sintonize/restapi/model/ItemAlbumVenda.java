@@ -8,9 +8,8 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "album_venda")
-@Getter
 @NoArgsConstructor
-@Setter
+@Getter
 public class ItemAlbumVenda {
 
     @Id

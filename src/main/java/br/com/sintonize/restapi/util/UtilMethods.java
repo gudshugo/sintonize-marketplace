@@ -3,6 +3,7 @@ package br.com.sintonize.restapi.util;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class UtilMethods {
 
@@ -18,4 +19,15 @@ public class UtilMethods {
                 .atZone(ZoneId.systemDefault())
                 .toLocalDate();
     }
+
+    public static String convertMsToMinutesString(int ms){
+
+        return String.format("%02d min, %02d sec",
+                TimeUnit.MILLISECONDS.toMinutes(ms),
+                TimeUnit.MILLISECONDS.toSeconds(ms) -
+                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(ms))
+        );
+
+    }
+
 }
