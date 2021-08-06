@@ -25,7 +25,7 @@ public class AlbumController {
         this.albumService = albumService;
     }
 
-    @ApiOperation("Endpoint para consultar o catálogo de albums de forma paginada, filtrando por gênero e ordenando de forma crescente pelo nome do album.")
+    @ApiOperation("Endpoint para consultar o catálogo de albums de forma paginada e ordenando de forma crescente pelo nome do album.")
     @GetMapping(value = "/v1/albums", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Page<Album>> findAlbuns(
             @RequestParam(value="page", defaultValue="0") Integer page,

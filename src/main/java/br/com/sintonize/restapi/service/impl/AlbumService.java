@@ -36,7 +36,7 @@ public class AlbumService implements IAlbumService {
     @Override
     public Page<Album> findAlbums(Integer page, Integer linesPerPage, String orderBy, String direction){
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
-        return null;
+        return albumRepository.findAll(pageRequest);
     }
 
     @Override

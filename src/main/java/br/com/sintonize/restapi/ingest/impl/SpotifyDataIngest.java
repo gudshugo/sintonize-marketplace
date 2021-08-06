@@ -28,6 +28,7 @@ public class SpotifyDataIngest implements ISpotifyDataIngest {
 
     private final IAlbumService albumService;
 
+    //TODO Recuperar imagem vazia de um bucket no S3
     private final String emptyArtistImage = " ";
 
     @Autowired
