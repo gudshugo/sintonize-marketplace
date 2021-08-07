@@ -19,7 +19,6 @@ public class Album {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
-    private UUID uniqueId;
     private String nome;
     private String nomeArtista;
     private String imagem;
@@ -34,7 +33,6 @@ public class Album {
 
     public static class Builder {
 
-        private UUID uniqueId;
         private String nome;
         private String nomeArtista;
         private String imagem;
@@ -42,11 +40,6 @@ public class Album {
         private String idApiSpotify;
         private String linkSpotify;
         private List<AlbumDetalhe> albumDetalhes;
-
-        public Builder withUniqueId(UUID uniqueId){
-            this.uniqueId = uniqueId;
-            return this;
-        }
 
         public Builder withNome(String nome){
             this.nome = nome;
@@ -90,7 +83,6 @@ public class Album {
     }
 
     private Album(Builder builder) {
-        uniqueId = builder.uniqueId;
         nome = builder.nome;
         nomeArtista = builder.nomeArtista;
         imagem = builder.imagem;

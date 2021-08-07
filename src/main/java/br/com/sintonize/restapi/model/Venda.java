@@ -30,15 +30,12 @@ public class Venda {
 
     private LocalDate dataVenda;
 
-    private UUID uniqueId;
-
     public static class Builder {
 
         private Long id;
         private Double valorVenda;
         private Double valorCashback;
         private LocalDate dataVenda;
-        private UUID uniqueId;
         private List<ItemAlbumVenda> itemAlbumVendas;
 
         public Builder setId(Long id){
@@ -61,11 +58,6 @@ public class Venda {
             return this;
         }
 
-        public Builder withUniqueId(UUID uniqueId){
-            this.uniqueId = uniqueId;
-            return this;
-        }
-
         public Builder withItemAlbumVendas(List<ItemAlbumVenda> itemAlbumVendas){
             this.itemAlbumVendas = itemAlbumVendas;
             return this;
@@ -82,7 +74,6 @@ public class Venda {
         valorCashback = builder.valorCashback;
         itemAlbumVendas = builder.itemAlbumVendas;
         dataVenda  = builder.dataVenda;
-        uniqueId = builder.uniqueId;
     }
 
 }

@@ -10,7 +10,6 @@ import lombok.experimental.UtilityClass;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @UtilityClass
@@ -35,7 +34,6 @@ public class AlbumMapper {
     public static Album mapAlbumResponseSpotifyToDomain (AlbumSimplified ab, List<AlbumDetalhe> detalhes){
 
         return new Album.Builder()
-                .withUniqueId(UUID.randomUUID())
                 .withNome(ab.getName())
                 .withNomeArtista(!Arrays.asList(ab.getArtists()).isEmpty() ? Arrays.asList(ab.getArtists()).get(0).getName() : "Artista Desconhecido")
                 .withImagem(!Arrays.asList(ab.getImages()).isEmpty() ? Arrays.asList(ab.getImages()).get(0).getUrl() : emptyArtistImage)

@@ -1,16 +1,15 @@
 package br.com.sintonize.restapi.enums;
 
+import br.com.sintonize.restapi.exception.EnumNotFoundException;
+
 import java.util.Calendar;
 import java.util.Date;
 
 public enum DiaEnum {
 
-    DOM(0), SEG(1), TER(2), QUA(3), QUI(4), SEX(5), SAB(6), NONE(7);
-
-    private int value;
+    DOM(1), SEG(2), TER(3), QUA(4), QUI(5), SEX(6), SAB(7);
 
     DiaEnum(final int value){
-        this.value = value;
     }
 
     public static DiaEnum toEnum(Date date) {
@@ -33,9 +32,10 @@ public enum DiaEnum {
                 return DiaEnum.SEX;
             case 7:
                 return DiaEnum.SAB;
+            default:
+                throw new EnumNotFoundException("Data inválida!");
         }
 
-        return DiaEnum.NONE;
     }
 
 }

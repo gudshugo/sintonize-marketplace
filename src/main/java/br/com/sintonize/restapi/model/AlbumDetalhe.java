@@ -1,16 +1,12 @@
 package br.com.sintonize.restapi.model;
 
 import br.com.sintonize.restapi.util.MillisecondsToMinutesConverter;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.util.UUID;
 
 @Entity
 @AllArgsConstructor
