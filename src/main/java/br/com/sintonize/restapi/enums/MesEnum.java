@@ -2,57 +2,66 @@ package br.com.sintonize.restapi.enums;
 
 import br.com.sintonize.restapi.exception.EnumNotFoundException;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDate;
 
 public enum MesEnum {
 
-    JANEIRO(1, "Janeiro"),
-    FEVEREIO(2, "Fevereiro"),
-    MARCO(3, "Março"),
-    ABRIL(4, "Abril"),
-    MAIO(5, "Maio"),
-    JUNHO(6, "Junho"),
-    JULHO(7, "Julho"),
-    AGOSTO(8, "Agosto"),
-    SETEMBRO(9, "Setembro"),
-    OUTUBRO(10, "Outubro"),
-    NOVEMBRO(11, "Novembro"),
-    DEZEMBRO(12, "Dezembro");
+    JAN(1, "Janeiro"),
+    FEV(2, "Fevereiro"),
+    MAR(3, "Março"),
+    ABR(4, "Abril"),
+    MAI(5, "Maio"),
+    JUN(6, "Junho"),
+    JUL(7, "Julho"),
+    AGO(8, "Agosto"),
+    SET(9, "Setembro"),
+    OUT(10, "Outubro"),
+    NOV(11, "Novembro"),
+    DEZ(12, "Dezembro");
+
+    private final int value;
+    private final String descricao;
 
     MesEnum(int value, String descricao) {
+        this.value = value;
+        this.descricao = descricao;
     }
 
-    public static MesEnum toEnum(Date date) {
+    public String getDescricao() {
+        return descricao;
+    }
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
+    public int getValue() {
+        return value;
+    }
 
-        switch(calendar.get(Calendar.MONTH)) {
+    public static int toEnumValue(LocalDate date) {
+
+        switch(date.getMonthValue()) {
             case 1:
-                return MesEnum.JANEIRO;
+                return MesEnum.JAN.getValue();
             case 2:
-                return MesEnum.FEVEREIO;
+                return MesEnum.FEV.getValue();
             case 3:
-                return MesEnum.MARCO;
+                return MesEnum.MAR.getValue();
             case 4:
-                return MesEnum.ABRIL;
+                return MesEnum.ABR.getValue();
             case 5:
-                return MesEnum.MAIO;
+                return MesEnum.MAI.getValue();
             case 6:
-                return MesEnum.JUNHO;
+                return MesEnum.JUN.getValue();
             case 7:
-                return MesEnum.JULHO;
+                return MesEnum.JUL.getValue();
             case 8:
-                return MesEnum.AGOSTO;
+                return MesEnum.AGO.getValue();
             case 9:
-                return MesEnum.SETEMBRO;
+                return MesEnum.SET.getValue();
             case 10:
-                return MesEnum.OUTUBRO;
+                return MesEnum.OUT.getValue();
             case 11:
-                return MesEnum.NOVEMBRO;
+                return MesEnum.NOV.getValue();
             case 12:
-                return MesEnum.DEZEMBRO;
+                return MesEnum.DEZ.getValue();
             default:
                 throw new EnumNotFoundException("Data inválida!");
         }

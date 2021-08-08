@@ -27,7 +27,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("br.com.sintonize.restapi.resources"))
+                .apis(RequestHandlerSelectors.basePackage("br.com.sintonize.restapi.controller"))
                 .paths(PathSelectors.any())
                 .build()
                 .useDefaultResponseMessages(false)
@@ -37,8 +37,8 @@ public class SwaggerConfig implements WebMvcConfigurer {
     
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Bem vindo ao Beblue CashBack API")
-                .description("Projeto de uma API REST em Java (Spring Framework) referente ao teste técnico para desenvolvedor java na Fintech Beblue.")
+                .title("Bem vindo ao Sintonize API")
+                .description("Aplicação back-end responsável pelo consumo e alimentação do sistema de marketplace de albums e singles.")
                 .version("0.0.1")
                 .contact(new Contact("Hugo Gois","https://www.linkedin.com/in/hugo-gois/", "gudshugo@gmail.com"))
                 .build();

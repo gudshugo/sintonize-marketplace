@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,7 +23,7 @@ public class Album {
     private String nome;
     private String nomeArtista;
     private String imagem;
-    private Double valor;
+    private BigDecimal valor;
     private String idApiSpotify;
     private String linkSpotify;
 
@@ -36,7 +37,7 @@ public class Album {
         private String nome;
         private String nomeArtista;
         private String imagem;
-        private Double valor;
+        private BigDecimal valor;
         private String idApiSpotify;
         private String linkSpotify;
         private List<AlbumDetalhe> albumDetalhes;
@@ -56,7 +57,7 @@ public class Album {
             return this;
         }
 
-        public Builder withValor(Double valor){
+        public Builder withValor(BigDecimal valor){
             this.valor = valor;
             return this;
         }

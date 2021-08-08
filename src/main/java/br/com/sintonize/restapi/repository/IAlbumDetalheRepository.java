@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface AlbumDetalheRepository extends JpaRepository<AlbumDetalhe, Integer> {
+public interface IAlbumDetalheRepository extends JpaRepository<AlbumDetalhe, Integer> {
 
     List<AlbumDetalhe> findAlbumDetalheByAlbumId(Long albumId);
 

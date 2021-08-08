@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -19,9 +20,9 @@ public class Venda {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Double valorVenda;
+    private BigDecimal valorVenda;
 
-    private Double valorCashback;
+    private BigDecimal valorCashback;
 
     @OneToMany(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "venda_id")
@@ -33,8 +34,8 @@ public class Venda {
     public static class Builder {
 
         private Long id;
-        private Double valorVenda;
-        private Double valorCashback;
+        private BigDecimal valorVenda;
+        private BigDecimal valorCashback;
         private LocalDate dataVenda;
         private List<ItemAlbumVenda> itemAlbumVendas;
 
@@ -43,12 +44,12 @@ public class Venda {
             return this;
         }
 
-        public Builder withValorVenda(Double valorVenda){
+        public Builder withValorVenda(BigDecimal valorVenda){
             this.valorVenda = valorVenda;
             return this;
         }
 
-        public Builder withValorCashback(Double valorCashback){
+        public Builder withValorCashback(BigDecimal valorCashback){
             this.valorCashback = valorCashback;
             return this;
         }

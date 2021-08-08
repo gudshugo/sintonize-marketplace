@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @AllArgsConstructor
@@ -20,25 +21,33 @@ public class Cashback {
     private Long id;
 
     @Column(name = "dia")
+    @Enumerated(EnumType.ORDINAL)
     private DiaEnum dia;
 
     @Column(name = "mes")
+    @Enumerated(EnumType.ORDINAL)
     private MesEnum mes;
 
-    private Double cashback;
+    private BigDecimal valor;
 
     public static class Builder {
 
+        private MesEnum mes;
         private DiaEnum dia;
-        private Double cashback;
+        private BigDecimal valor;
+
+        public Builder withMes(MesEnum mes){
+            this.mes = mes;
+            return this;
+        }
 
         public Builder withDia(DiaEnum dia){
             this.dia = dia;
             return this;
         }
 
-        public Builder withCashback(Double cashback){
-            this.cashback = cashback;
+        public Builder withValor(BigDecimal valor){
+            this.valor = valor;
             return this;
         }
 
@@ -48,8 +57,9 @@ public class Cashback {
     }
 
     private Cashback(Builder builder){
+        mes = builder.mes;
         dia = builder.dia;
-        cashback = builder.cashback;
+        valor = builder.valor;
     }
 
 

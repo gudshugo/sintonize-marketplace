@@ -3,8 +3,8 @@ package br.com.sintonize.restapi.service.impl;
 import br.com.sintonize.restapi.exception.AlbumNotFoundException;
 import br.com.sintonize.restapi.model.Album;
 import br.com.sintonize.restapi.model.AlbumDetalhe;
-import br.com.sintonize.restapi.repository.AlbumDetalheRepository;
-import br.com.sintonize.restapi.repository.AlbumRepository;
+import br.com.sintonize.restapi.repository.IAlbumDetalheRepository;
+import br.com.sintonize.restapi.repository.IAlbumRepository;
 import br.com.sintonize.restapi.service.IAlbumService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,12 +18,12 @@ import java.util.Optional;
 @Service
 public class AlbumService implements IAlbumService {
 
-    private final AlbumRepository albumRepository;
+    private final IAlbumRepository albumRepository;
 
-    private final AlbumDetalheRepository albumDetalheRepository;
+    private final IAlbumDetalheRepository albumDetalheRepository;
 
     @Autowired
-    public AlbumService(AlbumRepository albumRepository, AlbumDetalheRepository albumDetalheRepository) {
+    public AlbumService(IAlbumRepository albumRepository, IAlbumDetalheRepository albumDetalheRepository) {
         this.albumRepository = albumRepository;
         this.albumDetalheRepository = albumDetalheRepository;
     }

@@ -2,9 +2,9 @@ package br.com.sintonize.restapi.model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "album_venda")
@@ -24,39 +24,35 @@ public class ItemAlbumVenda {
     @JoinColumn(name = "venda_id")
     private Venda venda;
 
-    private Double valorVenda;
+    private String codigoVenda;
 
-    private Double valorCashback;
+    private BigDecimal valorVenda;
+
+    private BigDecimal valorCashback;
 
     public static class Builder {
 
-        private Long id;
         private Album album;
-        private Venda venda;
-        private Double valorVenda;
-        private Double valorCashback;
-
-        public Builder setId(Long id){
-            this.id = id;
-            return this;
-        }
+        private String codigoVenda;
+        private BigDecimal valorVenda;
+        private BigDecimal valorCashback;
 
         public Builder withAlbum(Album album){
             this.album = album;
             return this;
         }
 
-        public Builder withVenda(Venda venda){
-            this.venda = venda;
+        public Builder withCodigoVenda(String codigoVenda){
+            this.codigoVenda = codigoVenda;
             return this;
         }
 
-        public Builder withValorVenda(Double valorVenda){
+        public Builder withValorVenda(BigDecimal valorVenda){
             this.valorVenda = valorVenda;
             return this;
         }
 
-        public Builder withValorCashback(Double valorCashback){
+        public Builder withValorCashback(BigDecimal valorCashback){
             this.valorCashback = valorCashback;
             return this;
         }
@@ -67,9 +63,8 @@ public class ItemAlbumVenda {
     }
 
     private ItemAlbumVenda(Builder builder){
-        id = builder.id;
         album = builder.album;
-        venda = builder.venda;
+        codigoVenda = builder.codigoVenda;
         valorVenda = builder.valorVenda;
         valorCashback = builder.valorCashback;
     }

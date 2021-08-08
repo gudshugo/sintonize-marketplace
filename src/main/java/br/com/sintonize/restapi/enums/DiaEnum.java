@@ -2,36 +2,51 @@ package br.com.sintonize.restapi.enums;
 
 import br.com.sintonize.restapi.exception.EnumNotFoundException;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDate;
 
 public enum DiaEnum {
 
-    DOM(1), SEG(2), TER(3), QUA(4), QUI(5), SEX(6), SAB(7);
+    SEG(1, "Segunda"),
+    TER(2, "Terça"),
+    QUA(3, "Quarta"),
+    QUI(4, "Quinta"),
+    SEX(5, "Sexta"),
+    SAB(6, "Sábado"),
+    DOM(7, "Domingo");
 
-    DiaEnum(final int value){
+    private final int value;
+    private final String descricao;
+
+    DiaEnum(int value, String descricao) {
+        this.value = value;
+        this.descricao = descricao;
     }
 
-    public static DiaEnum toEnum(Date date) {
+    public String getDescricao() {
+        return descricao;
+    }
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
+    public int getValue() {
+        return value;
+    }
 
-        switch(calendar.get(Calendar.DAY_OF_WEEK)) {
-            case 1:
-                return DiaEnum.DOM;
-            case 2:
-                return DiaEnum.SEG;
-            case 3:
-                return DiaEnum.TER;
-            case 4:
-                return DiaEnum.QUA;
-            case 5:
-                return DiaEnum.QUI;
-            case 6:
-                return DiaEnum.SEX;
-            case 7:
-                return DiaEnum.SAB;
+    public static int toEnumValue(LocalDate date) {
+
+        switch(date.getDayOfWeek()) {
+            case MONDAY:
+                return DiaEnum.SEG.getValue();
+            case TUESDAY:
+                return DiaEnum.TER.getValue();
+            case WEDNESDAY:
+                return DiaEnum.QUA.getValue();
+            case THURSDAY:
+                return DiaEnum.QUI.getValue();
+            case FRIDAY:
+                return DiaEnum.SEX.getValue();
+            case SATURDAY:
+                return DiaEnum.SAB.getValue();
+            case SUNDAY:
+                return DiaEnum.DOM.getValue();
             default:
                 throw new EnumNotFoundException("Data inválida!");
         }

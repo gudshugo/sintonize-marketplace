@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface AlbumRepository extends JpaRepository<Album, Integer> {
+public interface IAlbumRepository extends JpaRepository<Album, Integer> {
 
     @Query("select count(e.id) from Album e")
     Long checkIfExistsAnyEntry();
