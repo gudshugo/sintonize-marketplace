@@ -6,3 +6,4 @@ CREATE TABLE cashback (
 	CONSTRAINT cashback_venda_pkey PRIMARY KEY (id)
 );
 
+
